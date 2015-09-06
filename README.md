@@ -1,6 +1,6 @@
-Simple websocket server on php.
+Examples for simple websocket server on php https://github.com/morozovsk/websocket.
 
-"composer require morozovsk/websocket"
+"composer require morozovsk/websocket-examples"
 
 ###Features:
 * server works with socket_select, pecl/event or pecl/libevent.
@@ -19,14 +19,6 @@ Run from console:
 * start: "php index.php start" or "nohup php index.php start &"
 * stop: "php index.php stop"
 * restart: "php index.php restart" or "nohup php index.php restart &"
-
-How it work (for russian speakers):
-* http://habrahabr.ru/company/ifree/blog/209864/
-* http://habrahabr.ru/company/ifree/blog/210228/
-* http://habrahabr.ru/company/ifree/blog/211504/
-
-Fork for Laravel 4:
-* https://github.com/Cherry-Pie/websocket
 
 ###License
 
