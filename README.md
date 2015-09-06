@@ -2,11 +2,6 @@ Examples for simple websocket server on php https://github.com/morozovsk/websock
 
 "composer require morozovsk/websocket-examples"
 
-###Features:
-* server works with socket_select, pecl/event or pecl/libevent.
-* you can run multiple processes (one master and several workers).
-* integration with your framework.
-
 Examples directory:
 * chat - simple chat (single daemon) (live demo: http://sharoid.ru/chat.html )
 * chat2 - chat (master + worker) (live demo: http://sharoid.ru/chat2.html )
@@ -14,7 +9,8 @@ Examples directory:
 * yii - sample of use yii with websockets: Yii::app()->websocket->send('Hello world');
 * game - simple game (live demo: http://sharoid.ru/game.html )
 * game2 - game (live demo: http://sharoid.ru/game2.html ) (port of node.js game: https://github.com/amikstrike/wn)
-* 
+*
+
 Run from console:
 * start: "php index.php start" or "nohup php index.php start &"
 * stop: "php index.php stop"
