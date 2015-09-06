@@ -1,6 +1,6 @@
 <?php
 
-namespace morozovsk\websocket\samples;
+namespace morozovsk\websocket\examples\game\server;
 
 //пример реализации чата
 class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon

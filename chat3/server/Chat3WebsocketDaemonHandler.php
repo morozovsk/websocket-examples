@@ -1,6 +1,6 @@
 <?php
 
-namespace morozovsk\websocket\samples;
+namespace morozovsk\websocket\examples\chat3\server;
 
 //пример реализации чата
 class Chat3WebsocketDaemonHandler extends \morozovsk\websocket\Daemon

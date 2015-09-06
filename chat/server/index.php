@@ -6,7 +6,7 @@ if (empty($argv[1]) || !in_array($argv[1], array('start', 'stop', 'restart'))) {
 }
 
 $config = array(
-    'class' => 'morozovsk\websocket\samples\ChatWebsocketDaemonHandler',
+    'class' => 'morozovsk\websocket\examples\chat\server\ChatWebsocketDaemonHandler',
     'pid' => '/tmp/websocket_chat.pid',
     'websocket' => 'tcp://127.0.0.1:8000',
     //'localsocket' => 'tcp://127.0.0.1:8010',
