@@ -546,8 +546,8 @@ class Game2WebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         for ($i = $start_point_x; $i < $end_point_x; $i++) {
             for ($j = $start_point_y; $j < $end_point_y; $j++) {
                 if (isset($this->map_arr[$j * $this->map_width + $i]) && $this->map_arr[$j * $this->map_width + $i] != $unit['id']) {
-                    $curunit = &$this->units[$this->map_arr[$j * $this->map_width + $i]];
-                    if ($curunit['live'] == true && $curunit['team'] != $unit['team']) {
+                    $curunit = isset($this->units[$this->map_arr[$j * $this->map_width + $i]]) ? $this->units[$this->map_arr[$j * $this->map_width + $i]] : null;
+                    if ($curunit && $curunit['live'] == true && $curunit['team'] != $unit['team']) {
                         if ($curunit['action'] != $this->action_code['block']) //если не блочим - бьем
                         {
                             $effect_on_unit_x = $curunit['x'] + $unit['width'] / 2;
