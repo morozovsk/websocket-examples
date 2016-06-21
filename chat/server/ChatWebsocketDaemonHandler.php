@@ -21,7 +21,7 @@ class ChatWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         //var_export($data);
         //send to all clients a message received from the client
         //echo $data . "\n";
-        $message = 'пользователь #' . $connectionId . ' (' . $this->pid . '): ' . strip_tags($data);
+        $message = 'user #' . $connectionId . ': ' . strip_tags($data);
 
         foreach ($this->clients as $clientId => $client) {
             $this->sendToClient($clientId, $message);
