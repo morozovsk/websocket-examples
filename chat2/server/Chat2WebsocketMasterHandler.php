@@ -6,7 +6,7 @@ class Chat2WebsocketMasterHandler extends \morozovsk\websocket\Daemon
 {
     protected $logins = array();
 
-    protected function onServiceMessage($connectionId, $packet) {//вызывается при получении сообщения от воркера
+    protected function onServiceMessage($connectionId, $packet) {//it is called when received a message from worker
         $packet = $this->unpack($packet);
 
         if ($packet['cmd'] == 'message') {
@@ -44,7 +44,7 @@ class Chat2WebsocketMasterHandler extends \morozovsk\websocket\Daemon
 
     public function sendPacketToOtherWorkers($connectionId, $cmd, $data) {
         $data = $this->pack($cmd, $data);
-        foreach ($this->services as $workerId => $worker) { //пересылаем данные во все воркеры
+        foreach ($this->services as $workerId => $worker) { //send the data to other workers
             if ($workerId !== $connectionId) {
                 $this->sendToService($workerId, $data);
             }
