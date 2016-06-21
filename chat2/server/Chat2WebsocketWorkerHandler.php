@@ -8,7 +8,7 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
 
     protected $logins = array();
 
-    protected function onOpen($connectionId, $info) {//it is called when the connection is closed
+    protected function onOpen($connectionId, $info) {//it is called when the connection is open
         if ($this->logins) {
             $this->sendPacketToClient($connectionId, 'logins', array_keys($this->logins));
         }
@@ -22,7 +22,7 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
         }
     }
 
-    protected function onMessage($connectionId, $data, $type) {//it is called when received a message from worker
+    protected function onMessage($connectionId, $data, $type) {//it is called when received a message from client
         if (!strlen($data)) {
             return;
         }
@@ -73,7 +73,7 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
         }
     }
 
-    protected function sendPacketToMaster($cmd, $data) {//send message to master
+    protected function sendPacketToMaster($cmd, $data) {//send message to master, so he sent it to all the workers
         $this->sendToMaster($this->pack($cmd, $data));
     }
 
