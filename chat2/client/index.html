@@ -15,10 +15,10 @@
             function wsStart() {
                 ws = new WebSocket("ws://127.0.0.1:8001/");
                 ws.onopen = function() {
-                    $("#chat").append("<p>Система: соединение открыто. Чтобы общаться в чате введите имя, под которым вы будете отображаться. В имени можно использовать английские буквы и цифры. Имя не должно превышать 10 символов.</p>");
+                    $("#chat").append("<p>system: connection is open. Please enter a name that will be displayed. The name can be used English letters and numbers. The name must not exceed 10 characters.</p>");
                 }
                 ws.onclose = function() {
-                    $("#chat").append("<p>Система: соединение закрыто, пытаюсь переподключиться</p>");
+                    $("#chat").append("<p>system: the connection is closed, I try to reconnect</p>");
                     $("#login p").remove();
                     $('#login span').text('0');
                     setTimeout(wsStart, 1000);
@@ -61,10 +61,10 @@
 <div class="container-fluid">
     <div class="row">
         <div style="float: left;width: 85%;padding: 10px;">
-            <div id="chat" style="overflow: auto;" class="well"><p>Система: пожалуйста подождите, идёт соединение с сервером.</p></div>
+            <div id="chat" style="overflow: auto;" class="well"><p>system: please wait, I try to connect to the server.</p></div>
         </div>
         <div style="width: 15%;margin-left: 85%; padding: 10px;">
-            <div id="login" style="overflow: auto;" class="well"><b>Пользователи (<span>0</span>):</b></div>
+            <div id="login" style="overflow: auto;" class="well"><b>Users (<span>0</span>):</b></div>
         </div>
     </div>
 </div>
