@@ -196,13 +196,13 @@ $(function () {
     function wsStart() {
         ws = new WebSocket("ws://127.0.0.1:8002/");
         ws.onopen = function () {
-            chat.append("<p>Система: соединение открыто. Чтобы начать играть введите имя, под которым вы будете отображаться. В имени можно использовать английские буквы и цифры. Имя не должно превышать 10 символов.</p>");
+            chat.append("<p>system: connection is open. Please enter a name that will be displayed in game. The name can be used English letters and numbers. The name must not exceed 10 characters.</p>");
             chat.scrollTop($('#chat')[0].scrollHeight);
             paused = true;
             mainLoop({w: w, h: h});
         };
         ws.onclose = function () {
-            chat.append("<p>система: соединение закрыто, пытаюсь переподключиться</p>");
+            chat.append("<p>system: the connection is closed, I try to reconnect</p>");
             chat.scrollTop($('#chat')[0].scrollHeight);
             paused = true;
             setTimeout(wsStart, 1000);
