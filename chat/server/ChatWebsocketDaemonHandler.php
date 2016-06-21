@@ -2,24 +2,24 @@
 
 namespace morozovsk\websocket\examples\chat\server;
 
-//пример реализации чата
+//chat realization example
 class ChatWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
 {
-    protected function onOpen($connectionId, $info) {//вызывается при соединении с новым клиентом
+    protected function onOpen($connectionId, $info) {//it is called when new connection is open
 
     }
 
-    protected function onClose($connectionId) {//вызывается при закрытии соединения с существующим клиентом
+    protected function onClose($connectionId) {//it is called when existed connection is closed
 
     }
 
-    protected function onMessage($connectionId, $data, $type) {//вызывается при получении сообщения от клиента
+    protected function onMessage($connectionId, $data, $type) {//it is called when a message is received from the client
         if (!strlen($data)) {
             return;
         }
 
         //var_export($data);
-        //шлем всем сообщение, о том, что пишет один из клиентов
+        //send to all clients a message received from the client
         //echo $data . "\n";
         $message = 'пользователь #' . $connectionId . ' (' . $this->pid . '): ' . strip_tags($data);
 
