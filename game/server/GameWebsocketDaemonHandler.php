@@ -2,7 +2,6 @@
 
 namespace morozovsk\websocket\examples\game\server;
 
-//пример реализации чата
 class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
 {
     protected $tanks = array();
@@ -44,7 +43,7 @@ class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         $this->sendData();
     }
 
-    protected function onOpen($connectionId, $info) {//вызывается при соединении с новым клиентом
+    protected function onOpen($connectionId, $info) {//it is called when the connection is open
         /*static $startTimer = 0;
         if (!$startTimer) {
             $startTimer = 1;
@@ -52,7 +51,7 @@ class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         }*/
     }
 
-    protected function onClose($connectionId) {//вызывается при закрытии соединения клиентом
+    protected function onClose($connectionId) {//it is called when existed connection is closed
         if (isset($this->tanks[$connectionId])) {
             unset($this->tanks[$connectionId]);
         }
@@ -62,7 +61,7 @@ class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         }
     }
 
-    protected function onMessage($connectionId, $data, $type) {//вызывается при получении сообщения от клиента
+    protected function onMessage($connectionId, $data, $type) {//it is called when received a message from client
         if (!strlen($data)) {
             return;
         }
@@ -81,7 +80,7 @@ class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
                     $this->tanks[$connectionId]['fire'] = true;
                 }
             } else {
-                //антифлуд:
+                //anti-flood:
                 $source = explode(':', stream_socket_get_name($this->getConnectionById($connectionId), true));
                 $ip = $source[0];
                 $time = time();
@@ -97,14 +96,14 @@ class GameWebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         } else {
             if (preg_match('/^[a-zA-Z0-9]{1,10}$/', $data, $match)) {
                 if (isset($this->logins[$match[0]])) {
-                    $this->sendPacketToClient($connectionId, 'message', 'Система: выбранное вами имя занято, попробуйте другое.');
+                    $this->sendPacketToClient($connectionId, 'message', 'system: selected name already exists, try another.');
                 } else {
                     $this->logins[$match[0]] = $connectionId;
-                    $this->sendPacketToClient($connectionId, 'message', 'Система: вы вошли в игру под именем ' . $match[0] . '. Для управления танком воспользуйтесь клавишами: вверх, вниз, вправо, влево или w s a d.');
+                    $this->sendPacketToClient($connectionId, 'message', 'system: you are logged in as ' . $match[0] . '. For control the tank, use the keys: up, down, right, left or w s a d and space.');
                     $this->tanks[$connectionId] = array('name' => $match[0], 'x' => rand($this->tankmodelsize/2, $this->w - $this->tankmodelsize/2), 'y' => rand($this->tankmodelsize/2, $this->h - $this->tankmodelsize/2), 'dir' => 'up', 'health' => 0);
                 }
             } else {
-                $this->sendPacketToClient($connectionId, 'message', 'Система: ошибка при выборе имени. В имени можно использовать английские буквы и цифры. Имя не должно превышать 10 символов.');
+                $this->sendPacketToClient($connectionId, 'message', 'system: wrong name. Please enter valid name that will be displayed. The name can be used English letters and numbers. The name must not exceed 10 characters.');
             }
         }
     }
