@@ -2,20 +2,19 @@
 
 namespace morozovsk\websocket\examples\chat2\server;
 
-//пример реализации чата
 class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
 {
     protected $flud;
 
     protected $logins = array();
 
-    protected function onOpen($connectionId, $info) {//вызывается при соединении с новым клиентом
+    protected function onOpen($connectionId, $info) {//it is called when the connection is closed
         if ($this->logins) {
             $this->sendPacketToClient($connectionId, 'logins', array_keys($this->logins));
         }
     }
 
-    protected function onClose($connectionId) {//вызывается при закрытии соединения клиентом
+    protected function onClose($connectionId) {//it is called when the connection is closed
         if ($login = array_search($connectionId, $this->logins)) {
             unset($this->logins[$login]);
             $this->sendPacketToMaster('logout', array('login' => $login, 'clientId' => $connectionId));
@@ -23,12 +22,12 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
         }
     }
 
-    protected function onMessage($connectionId, $data, $type) {//вызывается при получении сообщения от клиента
+    protected function onMessage($connectionId, $data, $type) {//it is called when received a message from worker
         if (!strlen($data)) {
             return;
         }
 
-        //антифлуд:
+        //anti-flood:
         $time = time();
         if (isset($this->flud[$connectionId]) && $this->flud[$connectionId] == $time) {
             return;
@@ -43,21 +42,18 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
         } else {
             if (preg_match('/^[a-zA-Z0-9]{1,10}$/', $data, $match)) {
                 if (isset($this->logins[$match[0]])) {
-                    $this->sendPacketToClient($connectionId, 'message', 'Система: выбранное вами имя занято, попробуйте другое.');
+                    $this->sendPacketToClient($connectionId, 'message', 'system: selected name already exists, try another.');
                 } else {
                     $this->logins[$match[0]] = -1;
                     $this->sendPacketToMaster('login', array('login' => $match[0], 'clientId' => $connectionId));
                 }
             } else {
-                $this->sendPacketToClient($connectionId, 'message', 'Система: ошибка при выборе имени. В имени можно использовать английские буквы и цифры. Имя не должно превышать 10 символов.');
+                $this->sendPacketToClient($connectionId, 'message', 'system: wrong name. Please enter valid name that will be displayed. The name can be used English letters and numbers. The name must not exceed 10 characters..');
             }
         }
-        //var_export($data);
-        //шлем всем сообщение, о том, что пишет один из клиентов
-        //echo $data . "\n";
     }
 
-    protected function onMasterMessage($packet) {//вызывается при получении сообщения от мастера
+    protected function onMasterMessage($packet) {//it is called when received a message from master
         $packet = $this->unpack($packet);
         if ($packet['cmd'] == 'message') {
             $this->sendPacketToClients('message', $packet['data']);
@@ -66,10 +62,10 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
                 $this->logins[ $packet['data']['login'] ] = $packet['data']['clientId'];
                 $this->sendPacketToClients('login', $packet['data']['login']);
                 if (isset($this->clients[ $packet['data']['clientId'] ])) {
-                    $this->sendPacketToClient($this->clients[ $packet['data']['clientId'] ], 'message', 'Система: вы вошли в чат под именем ' . $packet['data']['login']);
+                    $this->sendPacketToClient($this->clients[ $packet['data']['clientId'] ], 'message', 'system: you are logged in as ' . $packet['data']['login']);
                 }
             } else {
-                $this->sendPacketToClient($this->clients[ $packet['data']['clientId'] ], 'message', 'Система: выбранное вами имя занято, попробуйте другое.');
+                $this->sendPacketToClient($this->clients[ $packet['data']['clientId'] ], 'message', 'system: selected name already exists, try another.');
             }
         } elseif ($packet['cmd'] == 'logout') {
             unset($this->logins[$packet['data']['login']]);
@@ -77,7 +73,7 @@ class Chat2WebsocketWorkerHandler extends \morozovsk\websocket\Daemon
         }
     }
 
-    protected function sendPacketToMaster($cmd, $data) {//отправляем сообщение на мастер, чтобы он разослал его на все воркеры
+    protected function sendPacketToMaster($cmd, $data) {//send message to master
         $this->sendToMaster($this->pack($cmd, $data));
     }
 
