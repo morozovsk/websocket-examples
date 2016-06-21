@@ -2,7 +2,7 @@
 <?php
 
 if (empty($argv[1]) || !in_array($argv[1], array('start', 'stop', 'restart'))) {
-    die("не указан параметр (start|stop|restart)\r\n");
+    die("need parameter (start|stop|restart)\r\n");
 }
 
 $config = array(
