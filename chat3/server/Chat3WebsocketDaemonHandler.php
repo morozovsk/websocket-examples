@@ -2,11 +2,10 @@
 
 namespace morozovsk\websocket\examples\chat3\server;
 
-//пример реализации чата
 class Chat3WebsocketDaemonHandler extends \morozovsk\websocket\Daemon
 {
     public $userIds = [];
-    protected function onOpen($connectionId, $info) {//вызывается при соединении с новым клиентом
+    protected function onOpen($connectionId, $info) {//it is called when the connection is open
         $message = 'пользователь #' . $connectionId . ' : ' . var_export($info, true) . ' ' . stream_socket_get_name($this->clients[$connectionId], true);
 
         foreach ($this->clients as $clientId => $client) {
@@ -19,18 +18,15 @@ class Chat3WebsocketDaemonHandler extends \morozovsk\websocket\Daemon
         $this->userIds[$connectionId] = $_GET['userId'];
     }
 
-    protected function onClose($connectionId) {//вызывается при закрытии соединения с существующим клиентом
+    protected function onClose($connectionId) {//it is called when existed connection is closed
         unset($this->userIds[$connectionId]);
     }
 
-    protected function onMessage($connectionId, $data, $type) {//вызывается при получении сообщения от клиента
+    protected function onMessage($connectionId, $data, $type) {//it is called when received a message from client
         if (!strlen($data)) {
             return;
         }
 
-        //var_export($data);
-        //шлем всем сообщение, о том, что пишет один из клиентов
-        //echo $data . "\n";
         $message = 'пользователь #' . $connectionId . ' : ' . strip_tags($data);
 
         foreach ($this->clients as $clientId => $client) {
