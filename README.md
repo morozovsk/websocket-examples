@@ -7,7 +7,7 @@ Examples directory:
 * chat2 - chat (master + worker) (live demo: http://sharoid.ru/chat2.html )
 * chat3 - chat (single daemon + script who can send personal message by clientId, userId or PHPSESSID)
 * yii - sample of use yii with websockets: Yii::app()->websocket->send('Hello world');
-* game - simple game (live demo: http://sharoid.ru/game.html )
+* game - simple game (<strike>live demo: http://sharoid.ru/game.html</strike> )
 * game2 - game (live demo: http://sharoid.ru/game2.html ) (port of node.js game: https://github.com/amikstrike/wn)
 *
 
