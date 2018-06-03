@@ -3,13 +3,12 @@ Examples for simple websocket server on php https://github.com/morozovsk/websock
 "composer require morozovsk/websocket-examples"
 
 Examples directory:
-* chat - simple chat (single daemon) (live demo: http://sharoid.ru/chat.html )
-* chat2 - chat (master + worker) (live demo: http://sharoid.ru/chat2.html )
+* chat - simple chat (single daemon)
+* chat2 - chat (master + worker)
 * chat3 - chat (single daemon + script who can send personal message by clientId, userId or PHPSESSID)
 * yii - sample of use yii with websockets: Yii::app()->websocket->send('Hello world');
-* game - simple game (live demo: http://sharoid.ru/game.html )
-* game2 - game (<strike>live demo: http://sharoid.ru/game2.html</strike> ) (port of node.js game: https://github.com/amikstrike/wn)
-*
+* game - simple game
+* game2 - game (port of node.js game: https://github.com/amikstrike/wn)
 
 Run from console:
 * start: "php index.php start" or "nohup php index.php start &"
